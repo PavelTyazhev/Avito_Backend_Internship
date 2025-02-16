@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Shop - Avito Merch Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h2>Avito Merch Shop</h2>
+            <p class="lead">Your balance: <span class="badge bg-success">{{ user.coins }} coins</span></p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for item, price in merchandise.items() %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item }}</h5>
+                        <p class="card-text">Price: {{ price }} coins</p>
+                        <form action="{{ url_for('shop.buy_item', item=item) }}" method="POST">
+                            <button type="submit" class="btn btn-primary" {% if user.coins < price %}disabled{% endif %}>
+                                Purchase
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
